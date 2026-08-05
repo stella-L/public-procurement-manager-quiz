@@ -27,6 +27,39 @@ type CardMode = 'all' | 'wrong';
 
 const answerMarks = ['1', '2', '3', '4'];
 
+const randomInt = (max: number) => {
+  if (window.crypto?.getRandomValues) {
+    const values = new Uint32Array(1);
+    window.crypto.getRandomValues(values);
+    return values[0] % max;
+  }
+  return Math.floor(Math.random() * max);
+};
+
+const shuffle = <T,>(items: T[]) => {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = randomInt(index + 1);
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+};
+
+const randomizeChoices = (question: Question): Question => {
+  const options = question.choices.map((choice, index) => ({
+    choice,
+    reason: question.wrongReasons[index],
+    isAnswer: index === question.answerIndex,
+  }));
+  const shuffled = shuffle(options);
+  return {
+    ...question,
+    choices: shuffled.map((option) => option.choice),
+    wrongReasons: shuffled.map((option) => option.reason),
+    answerIndex: shuffled.findIndex((option) => option.isAnswer),
+  };
+};
+
 const App = () => {
   const [state, setState] = useState<StudyState>(() => loadState());
   const [view, setView] = useState<View>('home');
@@ -52,9 +85,9 @@ const App = () => {
   };
 
   const startQuiz = (mode: QuizMode) => {
-    const nextQuiz = mode === 'wrong' ? wrongQuestions.slice(0, 30) : pickQuestions(mode);
+    const nextQuiz = mode === 'wrong' ? shuffle(wrongQuestions).slice(0, 30) : pickQuestions(mode);
     if (!nextQuiz.length) return;
-    setQuiz(nextQuiz);
+    setQuiz(nextQuiz.map(randomizeChoices));
     setQuizMode(mode);
     setIndex(0);
     setSelected(null);
@@ -206,7 +239,7 @@ const App = () => {
           </div>
           <div className="focusHint">
             <CircleHelp size={18} />
-            <span>먼저 문제만 읽고, 선택지는 틀린 이유가 보이는 것부터 지우세요.</span>
+            <span>문제와 보기 순서는 매번 섞입니다. 먼저 틀린 이유가 보이는 선택지부터 지우세요.</span>
           </div>
           <article className="questionPanel">
             <p className="source">{current.source}</p>
@@ -323,7 +356,7 @@ const App = () => {
               </div>
               {wrongQuestions.map((question) => (
                 <QuestionListItem question={question} key={question.id} onClick={() => {
-                  setQuiz([question]);
+                  setQuiz([randomizeChoices(question)]);
                   setQuizMode('wrong');
                   setIndex(0);
                   setSelected(null);
@@ -338,7 +371,7 @@ const App = () => {
               <h3 className="subhead">헷갈림 저장</h3>
               {starredQuestions.map((question) => (
                 <QuestionListItem question={question} key={question.id} onClick={() => {
-                  setQuiz([question]);
+                  setQuiz([randomizeChoices(question)]);
                   setQuizMode('wrong');
                   setIndex(0);
                   setSelected(null);

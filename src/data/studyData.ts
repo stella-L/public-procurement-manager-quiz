@@ -191,12 +191,30 @@ export const examInfo = {
   ],
 };
 
+const seededRandom = (seed: number) => {
+  let value = seed || Date.now();
+  return () => {
+    value += 0x6d2b79f5;
+    let next = value;
+    next = Math.imul(next ^ (next >>> 15), next | 1);
+    next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
+    return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
+  };
+};
+
+const shuffleWithSeed = <T,>(items: T[], seed: number) => {
+  const random = seededRandom(seed);
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+};
+
 export const pickQuestions = (mode: 'focus5' | 'quick10' | 'exam30', seed = Date.now()) => {
   const count = mode === 'focus5' ? 5 : mode === 'quick10' ? 10 : 30;
-  const shuffled = [...questions].sort((a, b) => {
-    const av = Math.sin(seed + a.id.length + a.chapter * 13);
-    const bv = Math.sin(seed + b.id.length + b.chapter * 13);
-    return av - bv;
-  });
+  const entropy = Math.floor(Math.random() * 1_000_000);
+  const shuffled = shuffleWithSeed(questions, seed + entropy);
   return shuffled.slice(0, count);
 };
