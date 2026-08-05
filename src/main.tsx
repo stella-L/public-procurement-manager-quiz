@@ -17,7 +17,7 @@ import {
   Trophy,
   X,
 } from 'lucide-react';
-import { chapters, examInfo, flashcards, pickQuestions, questions, type Question } from './data/studyData';
+import { chapters, examInfo, flashcards, pickQuestions, questions, type Flashcard, type Question } from './data/studyData';
 import { getStats, loadState, recordAttempt, saveState, toggleStar, type StudyState } from './storage';
 import './styles.css';
 
@@ -70,6 +70,8 @@ const App = () => {
   const [showDeep, setShowDeep] = useState(false);
   const [cardIndex, setCardIndex] = useState(0);
   const [cardMode, setCardMode] = useState<CardMode>('all');
+  const [cardDeck, setCardDeck] = useState<Flashcard[]>([]);
+  const [cardRevealed, setCardRevealed] = useState(false);
   const [sessionResults, setSessionResults] = useState<boolean[]>([]);
   const [elapsed, setElapsed] = useState(0);
   const stats = getStats(state);
@@ -126,9 +128,7 @@ const App = () => {
   const sessionAccuracy = sessionResults.length ? Math.round((sessionCorrect / sessionResults.length) * 100) : 0;
   const starredQuestions = questions.filter((question) => state.starredQuestionIds.includes(question.id));
   const wrongConceptIds = new Set([...wrongQuestions, ...starredQuestions].map((question) => question.conceptId));
-  const visibleCards = cardMode === 'wrong'
-    ? flashcards.filter((card) => wrongConceptIds.has(card.id.slice(0, 6)))
-    : flashcards;
+  const visibleCards = cardDeck;
   const currentCard = visibleCards[cardIndex % Math.max(visibleCards.length, 1)];
 
   useEffect(() => {
@@ -138,9 +138,26 @@ const App = () => {
   }, [view, quizMode]);
 
   const openCards = (mode: CardMode = 'all') => {
+    const baseCards = mode === 'wrong'
+      ? flashcards.filter((card) => wrongConceptIds.has(card.conceptId))
+      : flashcards;
     setCardMode(mode);
     setCardIndex(0);
+    setCardDeck(shuffle(baseCards));
+    setCardRevealed(false);
     setView('cards');
+  };
+
+  const nextCard = () => {
+    if (!visibleCards.length) return;
+    setCardIndex((currentIndex) => (currentIndex + 1) % visibleCards.length);
+    setCardRevealed(false);
+  };
+
+  const previousCard = () => {
+    if (!visibleCards.length) return;
+    setCardIndex((currentIndex) => Math.max(0, currentIndex - 1));
+    setCardRevealed(false);
   };
 
   const downloadWrongAnki = () => {
@@ -318,7 +335,7 @@ const App = () => {
               <strong>방금 틀린 개념 복습</strong>
               <span>{wrongQuestions.length}문항 대기</span>
             </button>
-            <button onClick={() => setView('cards')} className="summaryAction">
+            <button onClick={() => openCards('all')} className="summaryAction">
               <Layers size={20} />
               <strong>카드로 가볍게 전환</strong>
               <span>문제 풀이 피로 줄이기</span>
@@ -404,17 +421,24 @@ const App = () => {
           ) : (
             <>
               <article className="flashcard">
-                <p>앞면</p>
-                <h2>{currentCard.front}</h2>
-                <p>뒷면</p>
-                <div dangerouslySetInnerHTML={{ __html: currentCard.back }} />
+                <button className={`cardFace ${cardRevealed ? 'revealed' : ''}`} onClick={() => setCardRevealed(!cardRevealed)}>
+                  <span>{cardRevealed ? '뒷면' : '앞면'}</span>
+                  {!cardRevealed ? (
+                    <>
+                      <h2>{currentCard.front}</h2>
+                      <em>탭해서 뒷면 보기</em>
+                    </>
+                  ) : (
+                    <div dangerouslySetInnerHTML={{ __html: currentCard.back }} />
+                  )}
+                </button>
               </article>
               <div className="progressTrack cardProgress" aria-label="카드 진행률">
                 <span style={{ width: `${((cardIndex + 1) / visibleCards.length) * 100}%` }} />
               </div>
               <div className="quizActions">
-                <button className="ghostButton" onClick={() => setCardIndex(Math.max(0, cardIndex - 1))}>이전</button>
-                <button className="primaryButton" onClick={() => setCardIndex((cardIndex + 1) % visibleCards.length)}>다음 카드</button>
+                <button className="ghostButton" onClick={previousCard}>이전</button>
+                <button className="primaryButton" onClick={nextCard}>다음 카드</button>
               </div>
               {cardMode === 'wrong' && (
                 <button className="downloadLink" onClick={downloadWrongAnki}>

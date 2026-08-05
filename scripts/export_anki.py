@@ -47,6 +47,26 @@ def make_cards(concepts):
                     f"<b>{concept['title']}</b><br>{concept['section']}<br>{', '.join(concept['tags'])}",
                     tags_for(concept, "source_map"),
                 ),
+                (
+                    f"시험장에서 \"{concept['title']}\"가 나오면 먼저 떠올릴 기준은?",
+                    f"<b>판단 기준</b>: {concept['easy']}<br><br><b>왜 중요한가</b>: {concept['definition']}",
+                    tags_for(concept, "exam_trigger"),
+                ),
+                (
+                    f"다음 표현이 왜 위험할까?<br>\"{concept['trap']}\"",
+                    f"<b>위험한 이유</b>: 이 표현은 {concept['title']}의 범위를 좁히거나 원칙과 예외를 섞을 수 있습니다.<br><br><b>정리</b>: {concept['definition']}",
+                    tags_for(concept, "wrong_phrase"),
+                ),
+                (
+                    f"{concept['title']}를 다른 개념과 헷갈리지 않으려면 어떤 단어에 표시할까?",
+                    f"<b>표시할 단어</b>: {concept['title']}<br><b>연결 범위</b>: {concept['section']}<br><b>암기 문장</b>: {concept['easy']}",
+                    tags_for(concept, "keyword_anchor"),
+                ),
+                (
+                    f"{concept['title']} 관련 문제에서 제거해야 할 선택지 패턴은?",
+                    f"<b>제거 패턴</b>: \"항상\", \"오직\", \"가격만\", \"절차 생략\", \"조달청만\"처럼 범위를 과도하게 단정하는 표현입니다.<br><br><b>정답 방향</b>: {concept['easy']}",
+                    tags_for(concept, "choice_elimination"),
+                ),
             ]
         )
     return cards

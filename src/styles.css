@@ -258,6 +258,48 @@ h2 {
   background: #ffffff;
 }
 
+.flashcard {
+  padding: 0;
+  overflow: hidden;
+}
+
+.cardFace {
+  display: grid;
+  width: 100%;
+  min-height: 300px;
+  align-content: center;
+  gap: 14px;
+  padding: 22px;
+  border: 0;
+  background: #ffffff;
+  color: #17201a;
+  text-align: left;
+}
+
+.cardFace span {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #edf4e8;
+  color: #2b663f;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.cardFace h2 {
+  margin-bottom: 0;
+  font-size: 1.45rem;
+}
+
+.cardFace em {
+  color: #657064;
+  font-style: normal;
+}
+
+.cardFace.revealed {
+  background: #fbfcf8;
+}
+
 .choices {
   display: grid;
   gap: 8px;

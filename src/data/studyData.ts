@@ -32,6 +32,7 @@ export type Question = {
 
 export type Flashcard = {
   id: string;
+  conceptId: string;
   front: string;
   back: string;
   tags: string[];
@@ -126,35 +127,78 @@ export const questions: Question[] = conceptList.flatMap((concept) => {
   ];
 });
 
+const makeFlashcard = (
+  concept: Concept,
+  number: number,
+  front: string,
+  back: string,
+  extraTag: string,
+): Flashcard => ({
+  id: `${concept.id}-f${number}`,
+  conceptId: concept.id,
+  front,
+  back,
+  tags: [...concept.tags, extraTag],
+  chapter: concept.chapter,
+});
+
 export const flashcards: Flashcard[] = conceptList.flatMap((concept) => [
-  {
-    id: `${concept.id}-f1`,
-    front: `${concept.title}이란?`,
-    back: `${concept.definition}<br><br><strong>쉬운 말</strong>: ${concept.easy}<br><strong>출처</strong>: ${concept.source}`,
-    tags: [...concept.tags, 'definition'],
-    chapter: concept.chapter,
-  },
-  {
-    id: `${concept.id}-f2`,
-    front: `${concept.title}에서 조심할 오답 함정은?`,
-    back: `${concept.trap}<br><br><strong>복습 힌트</strong>: ${concept.easy}`,
-    tags: [...concept.tags, 'trap'],
-    chapter: concept.chapter,
-  },
-  {
-    id: `${concept.id}-f3`,
-    front: `${concept.title}를 10초 안에 쉬운 말로 설명하면?`,
-    back: `${concept.easy}<br><br><strong>시험 포인트</strong>: ${concept.definition}`,
-    tags: [...concept.tags, 'adhd_short'],
-    chapter: concept.chapter,
-  },
-  {
-    id: `${concept.id}-f4`,
-    front: `${concept.source}의 핵심 키워드는?`,
-    back: `<strong>${concept.title}</strong><br>${concept.section}<br>${concept.tags.join(', ')}`,
-    tags: [...concept.tags, 'source_map'],
-    chapter: concept.chapter,
-  },
+  makeFlashcard(
+    concept,
+    1,
+    `${concept.title}이란?`,
+    `${concept.definition}<br><br><strong>쉬운 말</strong>: ${concept.easy}<br><strong>출처</strong>: ${concept.source}`,
+    'definition',
+  ),
+  makeFlashcard(
+    concept,
+    2,
+    `${concept.title}에서 조심할 오답 함정은?`,
+    `${concept.trap}<br><br><strong>복습 힌트</strong>: ${concept.easy}`,
+    'trap',
+  ),
+  makeFlashcard(
+    concept,
+    3,
+    `${concept.title}를 10초 안에 쉬운 말로 설명하면?`,
+    `${concept.easy}<br><br><strong>시험 포인트</strong>: ${concept.definition}`,
+    'adhd_short',
+  ),
+  makeFlashcard(
+    concept,
+    4,
+    `${concept.source}의 핵심 키워드는?`,
+    `<strong>${concept.title}</strong><br>${concept.section}<br>${concept.tags.join(', ')}`,
+    'source_map',
+  ),
+  makeFlashcard(
+    concept,
+    5,
+    `시험장에서 "${concept.title}"가 나오면 먼저 떠올릴 기준은?`,
+    `<strong>판단 기준</strong>: ${concept.easy}<br><br><strong>왜 중요한가</strong>: ${concept.definition}`,
+    'exam_trigger',
+  ),
+  makeFlashcard(
+    concept,
+    6,
+    `다음 표현이 왜 위험할까?<br>"${concept.trap}"`,
+    `<strong>위험한 이유</strong>: 이 표현은 ${concept.title}의 범위를 좁히거나 원칙과 예외를 섞을 수 있습니다.<br><br><strong>정리</strong>: ${concept.definition}`,
+    'wrong_phrase',
+  ),
+  makeFlashcard(
+    concept,
+    7,
+    `${concept.title}를 다른 개념과 헷갈리지 않으려면 어떤 단어에 표시할까?`,
+    `<strong>표시할 단어</strong>: ${concept.title}<br><strong>연결 범위</strong>: ${concept.section}<br><strong>암기 문장</strong>: ${concept.easy}`,
+    'keyword_anchor',
+  ),
+  makeFlashcard(
+    concept,
+    8,
+    `${concept.title} 관련 문제에서 제거해야 할 선택지 패턴은?`,
+    `<strong>제거 패턴</strong>: "항상", "오직", "가격만", "절차 생략", "조달청만"처럼 범위를 과도하게 단정하는 표현입니다.<br><br><strong>정답 방향</strong>: ${concept.easy}`,
+    'choice_elimination',
+  ),
 ]);
 
 export const chapters = Array.from(new Set(conceptList.map((concept) => concept.chapter))).map((chapter) => ({

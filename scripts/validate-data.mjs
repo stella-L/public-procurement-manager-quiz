@@ -27,14 +27,14 @@ for (const concept of concepts) {
 }
 
 const questionCount = concepts.length * 3;
-const cardCount = concepts.length * 4;
+const cardCount = concepts.length * 8;
 
 if (questionCount < 90) {
   errors.push(`expected at least 90 questions, got ${questionCount}`);
 }
 
-if (cardCount < 120) {
-  errors.push(`expected at least 120 flashcards, got ${cardCount}`);
+if (cardCount < 240) {
+  errors.push(`expected at least 240 flashcards, got ${cardCount}`);
 }
 
 if (errors.length) {
