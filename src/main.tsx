@@ -508,7 +508,7 @@ const App = () => {
                   <span>{cardRevealed ? '뒷면' : '앞면'}</span>
                   {!cardRevealed ? (
                     <>
-                      <h2>{currentCard.front}</h2>
+                      <h2 dangerouslySetInnerHTML={{ __html: currentCard.front }} />
                       <em>탭해서 뒷면 보기</em>
                     </>
                   ) : (
