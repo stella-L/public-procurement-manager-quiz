@@ -1,0 +1,641 @@
+{
+  "meta": {
+    "title": "공공조달관리사 필기 출제기준",
+    "source": "docs/출제기준_필기.pdf",
+    "effectivePeriod": "2026.03.01 ~ 2028.12.31",
+    "exam": {
+      "method": "객관식",
+      "totalQuestionCount": 80,
+      "duration": "2시간"
+    },
+    "tagFormat": "S{subject}.M{major}.SB{sub}.D{detail}"
+  },
+  "subjects": [
+    {
+      "id": "S1",
+      "subject": 1,
+      "name": "공공조달과 법제도 이해",
+      "questionCount": 30,
+      "majorItems": [
+        {
+          "id": "S1.M1",
+          "number": 1,
+          "title": "공공조달 개요",
+          "subItems": [
+            {
+              "id": "S1.M1.SB1",
+              "number": 1,
+              "title": "공공조달의 정의 및 목적",
+              "detailItems": [
+                { "id": "S1.M1.SB1.D1", "number": 1, "title": "공공조달의 정의" },
+                { "id": "S1.M1.SB1.D2", "number": 2, "title": "공공조달의 목적" },
+                { "id": "S1.M1.SB1.D3", "number": 3, "title": "공공조달의 범위" }
+              ]
+            },
+            {
+              "id": "S1.M1.SB2",
+              "number": 2,
+              "title": "공공조달 참여자, 이해관계자",
+              "detailItems": [
+                { "id": "S1.M1.SB2.D1", "number": 1, "title": "공공조달 수요자" },
+                { "id": "S1.M1.SB2.D2", "number": 2, "title": "공공조달 공급자" },
+                { "id": "S1.M1.SB2.D3", "number": 3, "title": "공공조달 이해관계자" }
+              ]
+            },
+            {
+              "id": "S1.M1.SB3",
+              "number": 3,
+              "title": "공공조달의 특성",
+              "detailItems": [
+                { "id": "S1.M1.SB3.D1", "number": 1, "title": "상업적 구매행위 특성" },
+                { "id": "S1.M1.SB3.D2", "number": 2, "title": "공공조달의 조달행위 특성" }
+              ]
+            },
+            {
+              "id": "S1.M1.SB4",
+              "number": 4,
+              "title": "공공조달의 구성체계",
+              "detailItems": [
+                { "id": "S1.M1.SB4.D1", "number": 1, "title": "조직적 구성체계" },
+                { "id": "S1.M1.SB4.D2", "number": 2, "title": "감독 및 기능적 책임" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S1.M2",
+          "number": 2,
+          "title": "공공조달 원칙 및 방법",
+          "subItems": [
+            {
+              "id": "S1.M2.SB1",
+              "number": 1,
+              "title": "공공조달 원칙",
+              "detailItems": [
+                { "id": "S1.M2.SB1.D1", "number": 1, "title": "공공조달 기본 원칙" },
+                { "id": "S1.M2.SB1.D2", "number": 2, "title": "공공조달 실행 원칙" }
+              ]
+            },
+            {
+              "id": "S1.M2.SB2",
+              "number": 2,
+              "title": "공공조달 유형",
+              "detailItems": [
+                { "id": "S1.M2.SB2.D1", "number": 1, "title": "중앙집중형 공공조달" },
+                { "id": "S1.M2.SB2.D2", "number": 2, "title": "분산형 공공조달" }
+              ]
+            },
+            {
+              "id": "S1.M2.SB3",
+              "number": 3,
+              "title": "경쟁적 공공조달 방법",
+              "detailItems": [
+                { "id": "S1.M2.SB3.D1", "number": 1, "title": "일반경쟁" },
+                { "id": "S1.M2.SB3.D2", "number": 2, "title": "제한경쟁" },
+                { "id": "S1.M2.SB3.D3", "number": 3, "title": "지명경쟁" }
+              ]
+            },
+            {
+              "id": "S1.M2.SB4",
+              "number": 4,
+              "title": "비경쟁적 공공조달 방법",
+              "detailItems": [
+                { "id": "S1.M2.SB4.D1", "number": 1, "title": "수의계약" },
+                { "id": "S1.M2.SB4.D2", "number": 2, "title": "소액구매" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S1.M3",
+          "number": 3,
+          "title": "전자조달시스템",
+          "subItems": [
+            {
+              "id": "S1.M3.SB1",
+              "number": 1,
+              "title": "전자조달시스템 개요",
+              "detailItems": [
+                { "id": "S1.M3.SB1.D1", "number": 1, "title": "전자조달시스템 개념" },
+                { "id": "S1.M3.SB1.D2", "number": 2, "title": "전자조달시스템 유형" },
+                { "id": "S1.M3.SB1.D3", "number": 3, "title": "전자조달시스템 운영환경" },
+                { "id": "S1.M3.SB1.D4", "number": 4, "title": "전자조달시스템 구성요소" },
+                { "id": "S1.M3.SB1.D5", "number": 5, "title": "전자조달시스템 기능" },
+                { "id": "S1.M3.SB1.D6", "number": 6, "title": "전자조달시스템 도입 성과" }
+              ]
+            },
+            {
+              "id": "S1.M3.SB2",
+              "number": 2,
+              "title": "국가종합전자조달시스템(나라장터) 연계 계약 관리 지원시스템 개요",
+              "detailItems": [
+                { "id": "S1.M3.SB2.D1", "number": 1, "title": "종합쇼핑몰 이용절차" },
+                { "id": "S1.M3.SB2.D2", "number": 2, "title": "혁신장터 활용 계약" },
+                { "id": "S1.M3.SB2.D3", "number": 3, "title": "벤처나라 활용 계약" },
+                { "id": "S1.M3.SB2.D4", "number": 4, "title": "디지털서비스몰 활용 계약" },
+                { "id": "S1.M3.SB2.D5", "number": 5, "title": "이음장터 활용 계약" }
+              ]
+            },
+            {
+              "id": "S1.M3.SB3",
+              "number": 3,
+              "title": "목록정보시스템 개요",
+              "detailItems": [
+                { "id": "S1.M3.SB3.D1", "number": 1, "title": "물품목록법령의 개요" },
+                { "id": "S1.M3.SB3.D2", "number": 2, "title": "목록정보시스템 이용 일반 절차" },
+                { "id": "S1.M3.SB3.D3", "number": 3, "title": "목록정보시스템 활용 목록화 절차" },
+                { "id": "S1.M3.SB3.D4", "number": 4, "title": "목록정보시스템 활용 분류·품명·품목 관리 절차" },
+                { "id": "S1.M3.SB3.D5", "number": 5, "title": "목록정보시스템 활용 최신화 및 분류 정비" },
+                { "id": "S1.M3.SB3.D6", "number": 6, "title": "목록정보시스템 활용 분류체계 국제 표준화" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S1.M4",
+          "number": 4,
+          "title": "전략적 공공조달",
+          "subItems": [
+            {
+              "id": "S1.M4.SB1",
+              "number": 1,
+              "title": "중소기업지원 조달",
+              "detailItems": [
+                { "id": "S1.M4.SB1.D1", "number": 1, "title": "중소기업과 공공구매제도 이해" },
+                { "id": "S1.M4.SB1.D2", "number": 2, "title": "중소기업자간 경쟁제도 이해" },
+                { "id": "S1.M4.SB1.D3", "number": 3, "title": "공사용자재 직접구매제도 이해" }
+              ]
+            },
+            {
+              "id": "S1.M4.SB2",
+              "number": 2,
+              "title": "녹색조달",
+              "detailItems": [
+                { "id": "S1.M4.SB2.D1", "number": 1, "title": "공공조달의 환경적 지속가능성 개요" },
+                { "id": "S1.M4.SB2.D2", "number": 2, "title": "녹색제품 우선구매제도 이해" },
+                { "id": "S1.M4.SB2.D3", "number": 3, "title": "생애주기비용을 고려한 공공조달 제도 이해" }
+              ]
+            },
+            {
+              "id": "S1.M4.SB3",
+              "number": 3,
+              "title": "혁신·기술개발 촉진조달",
+              "detailItems": [
+                { "id": "S1.M4.SB3.D1", "number": 1, "title": "중소기업 기술개발제품 우선구매제도 이해" },
+                { "id": "S1.M4.SB3.D2", "number": 2, "title": "우수조달물품 지정제도의 이해" },
+                { "id": "S1.M4.SB3.D3", "number": 3, "title": "혁신제품 지정제도의 이해" }
+              ]
+            },
+            {
+              "id": "S1.M4.SB4",
+              "number": 4,
+              "title": "사회적가치 지원 조달",
+              "detailItems": [
+                { "id": "S1.M4.SB4.D1", "number": 1, "title": "장애인기업 우선구매제도 이해" },
+                { "id": "S1.M4.SB4.D2", "number": 2, "title": "중증장애인생산품 우선구매제도 이해" },
+                { "id": "S1.M4.SB4.D3", "number": 3, "title": "여성기업 우선구매제도 이해" },
+                { "id": "S1.M4.SB4.D4", "number": 4, "title": "사회적기업제품 우선구매제도 이해" },
+                { "id": "S1.M4.SB4.D5", "number": 5, "title": "공공조달과 사회적가치 및 이에스지(ESG)" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S1.M5",
+          "number": 5,
+          "title": "공공조달법률 이해",
+          "subItems": [
+            {
+              "id": "S1.M5.SB1",
+              "number": 1,
+              "title": "공공계약 관련 민법 규정의 이해",
+              "detailItems": [
+                { "id": "S1.M5.SB1.D1", "number": 1, "title": "계약의 성립 관련 규정" },
+                { "id": "S1.M5.SB1.D2", "number": 2, "title": "계약의 효력 관련 규정" },
+                { "id": "S1.M5.SB1.D3", "number": 3, "title": "계약의 해제·해지에 관한 규정" },
+                { "id": "S1.M5.SB1.D4", "number": 4, "title": "도급·위임에 관한 규정" },
+                { "id": "S1.M5.SB1.D5", "number": 5, "title": "화해에 관한 규정" }
+              ]
+            },
+            {
+              "id": "S1.M5.SB2",
+              "number": 2,
+              "title": "공공계약(국가 및 지방) 법령의 이해",
+              "detailItems": [
+                { "id": "S1.M5.SB2.D1", "number": 1, "title": "추정가격 및 예정가격 결정" },
+                { "id": "S1.M5.SB2.D2", "number": 2, "title": "계약의 방법에 관한 규정" },
+                { "id": "S1.M5.SB2.D3", "number": 3, "title": "입찰 및 낙찰 절차 규정" },
+                { "id": "S1.M5.SB2.D4", "number": 4, "title": "계약의 체결 및 이행 규정" },
+                { "id": "S1.M5.SB2.D5", "number": 5, "title": "이의신청과 분쟁조정" }
+              ]
+            },
+            {
+              "id": "S1.M5.SB3",
+              "number": 3,
+              "title": "조달사업법령의 이해",
+              "detailItems": [
+                { "id": "S1.M5.SB3.D1", "number": 1, "title": "공공조달의 정책기반" },
+                { "id": "S1.M5.SB3.D2", "number": 2, "title": "계약체결의 요청 및 방법" },
+                { "id": "S1.M5.SB3.D3", "number": 3, "title": "대금지급 규정" },
+                { "id": "S1.M5.SB3.D4", "number": 4, "title": "조달사업의 공정성" },
+                { "id": "S1.M5.SB3.D5", "number": 5, "title": "수요기관 및 조달사업의 지원" }
+              ]
+            },
+            {
+              "id": "S1.M5.SB4",
+              "number": 4,
+              "title": "전자조달법령의 이해",
+              "detailItems": [
+                { "id": "S1.M5.SB4.D1", "number": 1, "title": "전자적 공고의 방법 및 시기" },
+                { "id": "S1.M5.SB4.D2", "number": 2, "title": "전자적 형태의 입찰서 제출" },
+                { "id": "S1.M5.SB4.D3", "number": 3, "title": "전자공개수의계약" },
+                { "id": "S1.M5.SB4.D4", "number": 4, "title": "하도급 관리의 전자적 처리" },
+                { "id": "S1.M5.SB4.D5", "number": 5, "title": "전자조달시스템 이용·활용 제한" }
+              ]
+            },
+            {
+              "id": "S1.M5.SB5",
+              "number": 5,
+              "title": "공기업·준정부기관 계약사무규칙",
+              "detailItems": [
+                { "id": "S1.M5.SB5.D1", "number": 1, "title": "국제입찰 대상 공공조달계약 범위" },
+                { "id": "S1.M5.SB5.D2", "number": 2, "title": "중소기업자간 경쟁제품 구매위탁 의무 예외" },
+                { "id": "S1.M5.SB5.D3", "number": 3, "title": "수의계약 규정" },
+                { "id": "S1.M5.SB5.D4", "number": 4, "title": "의견 청취 및 심의절차" },
+                { "id": "S1.M5.SB5.D5", "number": 5, "title": "이의신청 규정" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S1.M6",
+          "number": 6,
+          "title": "공정조달 관리",
+          "subItems": [
+            {
+              "id": "S1.M6.SB1",
+              "number": 1,
+              "title": "공공조달 법규 분쟁 및 해석",
+              "detailItems": [
+                { "id": "S1.M6.SB1.D1", "number": 1, "title": "공공조달 분쟁조정" },
+                { "id": "S1.M6.SB1.D2", "number": 2, "title": "유권해석 및 감사사례" },
+                { "id": "S1.M6.SB1.D3", "number": 3, "title": "계약보증금 쟁점" },
+                { "id": "S1.M6.SB1.D4", "number": 4, "title": "부정당제재 처분 법리" },
+                { "id": "S1.M6.SB1.D5", "number": 5, "title": "허위서류 관련 쟁점" }
+              ]
+            },
+            {
+              "id": "S1.M6.SB2",
+              "number": 2,
+              "title": "법규 위반시 제재",
+              "detailItems": [
+                { "id": "S1.M6.SB2.D1", "number": 1, "title": "계약의 해제 및 해지" },
+                { "id": "S1.M6.SB2.D2", "number": 2, "title": "부정당업자 제재" },
+                { "id": "S1.M6.SB2.D3", "number": 3, "title": "불공정조달행위 제재" },
+                { "id": "S1.M6.SB2.D4", "number": 4, "title": "부당이득금 환수" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "subject": 2,
+      "name": "공공조달계획 수립 및 분석",
+      "questionCount": 20,
+      "majorItems": [
+        {
+          "id": "S2.M1",
+          "number": 1,
+          "title": "공공조달계획",
+          "subItems": [
+            {
+              "id": "S2.M1.SB1",
+              "number": 1,
+              "title": "공공조달 수요 분석 및 계획",
+              "detailItems": [
+                { "id": "S2.M1.SB1.D1", "number": 1, "title": "공급 대상물 수요정보 식별" },
+                { "id": "S2.M1.SB1.D2", "number": 2, "title": "수요정보 평가와 요구사항 분석" },
+                { "id": "S2.M1.SB1.D3", "number": 3, "title": "공급계획 및 일정 수립" },
+                { "id": "S2.M1.SB1.D4", "number": 4, "title": "비상 공급계획 수립" }
+              ]
+            },
+            {
+              "id": "S2.M1.SB2",
+              "number": 2,
+              "title": "공공조달 적정성 분석",
+              "detailItems": [
+                { "id": "S2.M1.SB2.D1", "number": 1, "title": "공급방법 적정성 분석" },
+                { "id": "S2.M1.SB2.D2", "number": 2, "title": "공급정보 적정성 분석" },
+                { "id": "S2.M1.SB2.D3", "number": 3, "title": "공급 대상물 조달시장 분석" },
+                { "id": "S2.M1.SB2.D4", "number": 4, "title": "공급역량분석" }
+              ]
+            },
+            {
+              "id": "S2.M1.SB3",
+              "number": 3,
+              "title": "공공조달 비용 적정성 분석",
+              "detailItems": [
+                { "id": "S2.M1.SB3.D1", "number": 1, "title": "공급 의사결정을 위한 비용 분석" },
+                { "id": "S2.M1.SB3.D2", "number": 2, "title": "적정 공급비용 산정" }
+              ]
+            },
+            {
+              "id": "S2.M1.SB4",
+              "number": 4,
+              "title": "기타 적정성 분석",
+              "detailItems": [
+                { "id": "S2.M1.SB4.D1", "number": 1, "title": "공공조달 동향 모니터링을 통한 수요예측" },
+                { "id": "S2.M1.SB4.D2", "number": 2, "title": "다양한 공급방법의 장단점 분석" },
+                { "id": "S2.M1.SB4.D3", "number": 3, "title": "공급관리 및 위험분석" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S2.M2",
+          "number": 2,
+          "title": "조달요구 응대 및 제안",
+          "subItems": [
+            {
+              "id": "S2.M2.SB1",
+              "number": 1,
+              "title": "조달요구 대처 절차",
+              "detailItems": [
+                { "id": "S2.M2.SB1.D1", "number": 1, "title": "경쟁입찰참가자격 등록" },
+                { "id": "S2.M2.SB1.D2", "number": 2, "title": "수요기관의 정보요청(규격, 과업 및 예산 등)에 대한 문서 작성 및 제출" },
+                { "id": "S2.M2.SB1.D3", "number": 3, "title": "조달관련 입법·행정예고 검색 및 의견제시" }
+              ]
+            },
+            {
+              "id": "S2.M2.SB2",
+              "number": 2,
+              "title": "사전규격공개 분석",
+              "detailItems": [
+                { "id": "S2.M2.SB2.D1", "number": 1, "title": "과업내용 적정성 검토" },
+                { "id": "S2.M2.SB2.D2", "number": 2, "title": "사업예산 적정성 검토" },
+                { "id": "S2.M2.SB2.D3", "number": 3, "title": "당해 규격공개 관련 법규 준수 및 부합여부 검토" },
+                { "id": "S2.M2.SB2.D4", "number": 4, "title": "개선보완 필요사항에 대한 의견 제시 및 처리" }
+              ]
+            },
+            {
+              "id": "S2.M2.SB3",
+              "number": 3,
+              "title": "입찰공고문 분석",
+              "detailItems": [
+                { "id": "S2.M2.SB3.D1", "number": 1, "title": "공고 내용 중 오류 및 법령 위반 사안으로 정정 필요성 검토" },
+                { "id": "S2.M2.SB3.D2", "number": 2, "title": "입찰공고 내용 검토 및 분석" },
+                { "id": "S2.M2.SB3.D3", "number": 3, "title": "입찰보증금 제출방법" }
+              ]
+            },
+            {
+              "id": "S2.M2.SB4",
+              "number": 4,
+              "title": "입찰·제안요청 설명",
+              "detailItems": [
+                { "id": "S2.M2.SB4.D1", "number": 1, "title": "입찰설명회 참석" },
+                { "id": "S2.M2.SB4.D2", "number": 2, "title": "입찰 및 제안준비에 필요한 정보 식별 및 요청" }
+              ]
+            },
+            {
+              "id": "S2.M2.SB5",
+              "number": 5,
+              "title": "입찰서 제출 및 개찰",
+              "detailItems": [
+                { "id": "S2.M2.SB5.D1", "number": 1, "title": "입찰서 제출 방법" },
+                { "id": "S2.M2.SB5.D2", "number": 2, "title": "무효입찰 사유" },
+                { "id": "S2.M2.SB5.D3", "number": 3, "title": "개찰 및 낙찰 절차" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S2.M3",
+          "number": 3,
+          "title": "입찰·제안평가 및 계약체결",
+          "subItems": [
+            {
+              "id": "S2.M3.SB1",
+              "number": 1,
+              "title": "입찰·제안평가 절차",
+              "detailItems": [
+                { "id": "S2.M3.SB1.D1", "number": 1, "title": "일반·제한·지명 경쟁입찰 절차" },
+                { "id": "S2.M3.SB1.D2", "number": 2, "title": "수의계약 절차" }
+              ]
+            },
+            {
+              "id": "S2.M3.SB2",
+              "number": 2,
+              "title": "평가위원회 및 이해충돌",
+              "detailItems": [
+                { "id": "S2.M3.SB2.D1", "number": 1, "title": "입찰·낙찰 방법별 평가위원회 구성에 대한 이해" },
+                { "id": "S2.M3.SB2.D2", "number": 2, "title": "이해상충 평가위원에 대한 회피" },
+                { "id": "S2.M3.SB2.D3", "number": 3, "title": "평가위원 사전접촉 금지 등 공정한 평가를 위한 기준 지침 준수" }
+              ]
+            },
+            {
+              "id": "S2.M3.SB3",
+              "number": 3,
+              "title": "계약의 협상",
+              "detailItems": [
+                { "id": "S2.M3.SB3.D1", "number": 1, "title": "기술(규격) 적합자 및 우선협상대상자 이해" },
+                { "id": "S2.M3.SB3.D2", "number": 2, "title": "기술협상" },
+                { "id": "S2.M3.SB3.D3", "number": 3, "title": "가격협상" }
+              ]
+            },
+            {
+              "id": "S2.M3.SB4",
+              "number": 4,
+              "title": "낙찰자 결정방법",
+              "detailItems": [
+                { "id": "S2.M3.SB4.D1", "number": 1, "title": "적격심사 절차 및 낙찰자 결정" },
+                { "id": "S2.M3.SB4.D2", "number": 2, "title": "협상계약 절차 및 낙찰자 결정" },
+                { "id": "S2.M3.SB4.D3", "number": 3, "title": "희망수량경쟁입찰 절차 및 낙찰자 결정" },
+                { "id": "S2.M3.SB4.D4", "number": 4, "title": "종합심사낙찰제(시설공사 등) 절차 및 낙찰" },
+                { "id": "S2.M3.SB4.D5", "number": 5, "title": "계약법령상 낙찰요건 부합 여부" }
+              ]
+            },
+            {
+              "id": "S2.M3.SB5",
+              "number": 5,
+              "title": "입찰결과 분석 및 이의제기",
+              "detailItems": [
+                { "id": "S2.M3.SB5.D1", "number": 1, "title": "입찰·낙찰 과정 오류 및 문제점 분석" },
+                { "id": "S2.M3.SB5.D2", "number": 2, "title": "분석결과 문제점에 대한 이의제기" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "subject": 3,
+      "name": "공공계약관리",
+      "questionCount": 30,
+      "majorItems": [
+        {
+          "id": "S3.M1",
+          "number": 1,
+          "title": "계약관리 일반 절차",
+          "subItems": [
+            {
+              "id": "S3.M1.SB1",
+              "number": 1,
+              "title": "계약관리 계획",
+              "detailItems": [
+                { "id": "S3.M1.SB1.D1", "number": 1, "title": "계약관리 원칙" },
+                { "id": "S3.M1.SB1.D2", "number": 2, "title": "계약관리 계획" },
+                { "id": "S3.M1.SB1.D3", "number": 3, "title": "계약체결 후 발주처와 착수 협의" },
+                { "id": "S3.M1.SB1.D4", "number": 4, "title": "착수시점, 보고(점검)일정, 납품대상, 투입인력 등 계약이행 소요자원 투입(생산)계획" },
+                { "id": "S3.M1.SB1.D5", "number": 5, "title": "하도급계약 승인 및 변경 계획" }
+              ]
+            },
+            {
+              "id": "S3.M1.SB2",
+              "number": 2,
+              "title": "계약변경 관리",
+              "detailItems": [
+                { "id": "S3.M1.SB2.D1", "number": 1, "title": "변경계약 관리 일반절차" },
+                { "id": "S3.M1.SB2.D2", "number": 2, "title": "변경계약 절차 실행" },
+                { "id": "S3.M1.SB2.D3", "number": 3, "title": "계약해제·해지 절차 및 사후조치" },
+                { "id": "S3.M1.SB2.D4", "number": 4, "title": "손해배상 절차 및 사후조치" },
+                { "id": "S3.M1.SB2.D5", "number": 5, "title": "분쟁해결 절차" }
+              ]
+            },
+            {
+              "id": "S3.M1.SB3",
+              "number": 3,
+              "title": "계약이행 관리",
+              "detailItems": [
+                { "id": "S3.M1.SB3.D1", "number": 1, "title": "계약 대상물 공급(납품, 과업 이행 및 시공 등) 일반절차" },
+                { "id": "S3.M1.SB3.D2", "number": 2, "title": "공급 계약조건 이행 점검" },
+                { "id": "S3.M1.SB3.D3", "number": 3, "title": "계약이행 및 조건 미이행, 오류 및 지연 관리" },
+                { "id": "S3.M1.SB3.D4", "number": 4, "title": "계약성과관리" },
+                { "id": "S3.M1.SB3.D5", "number": 5, "title": "계약상 위험 관리" }
+              ]
+            },
+            {
+              "id": "S3.M1.SB4",
+              "number": 4,
+              "title": "계약종결 관리",
+              "detailItems": [
+                { "id": "S3.M1.SB4.D1", "number": 1, "title": "납품검사·검수 절차" },
+                { "id": "S3.M1.SB4.D2", "number": 2, "title": "대금지급 절차" },
+                { "id": "S3.M1.SB4.D3", "number": 3, "title": "계약종결 절차" },
+                { "id": "S3.M1.SB4.D4", "number": 4, "title": "하자보증 및 사후관리 이행" },
+                { "id": "S3.M1.SB4.D5", "number": 5, "title": "입찰보증금, 계약보증금, 선급금보증금, 하자보수보증금, 매입채권 및 보험 관리" },
+                { "id": "S3.M1.SB4.D6", "number": 6, "title": "지체상금 부과" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S3.M2",
+          "number": 2,
+          "title": "물품 계약관리",
+          "subItems": [
+            {
+              "id": "S3.M2.SB1",
+              "number": 1,
+              "title": "물품계약 일반절차 관리",
+              "detailItems": [
+                { "id": "S3.M2.SB1.D1", "number": 1, "title": "물품(제조·공급) 입찰참가자격 등록" },
+                { "id": "S3.M2.SB1.D2", "number": 2, "title": "물품구매 입찰 공고서 작성 및 검토" },
+                { "id": "S3.M2.SB1.D3", "number": 3, "title": "물품구매 낙찰자결정 방법" },
+                { "id": "S3.M2.SB1.D4", "number": 4, "title": "소액수의계약 절차" },
+                { "id": "S3.M2.SB1.D5", "number": 5, "title": "외자구매계약 절차" }
+              ]
+            },
+            {
+              "id": "S3.M2.SB2",
+              "number": 2,
+              "title": "물품계약 이행관리",
+              "detailItems": [
+                { "id": "S3.M2.SB2.D1", "number": 1, "title": "공정, 품질 및 안전관리" },
+                { "id": "S3.M2.SB2.D2", "number": 2, "title": "설계변경 및 계약금액 조정" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S3.M3",
+          "number": 3,
+          "title": "용역·다수공급자 계약 관리",
+          "subItems": [
+            {
+              "id": "S3.M3.SB1",
+              "number": 1,
+              "title": "용역계약 절차 및 이행관리",
+              "detailItems": [
+                { "id": "S3.M3.SB1.D1", "number": 1, "title": "용역 입찰공고문 검토" },
+                { "id": "S3.M3.SB1.D2", "number": 2, "title": "제안서 작성" },
+                { "id": "S3.M3.SB1.D3", "number": 3, "title": "낙찰자 결정방법" },
+                { "id": "S3.M3.SB1.D4", "number": 4, "title": "제안서 평가 및 제안발표" },
+                { "id": "S3.M3.SB1.D5", "number": 5, "title": "협상계약 및 경쟁적대화 계약" },
+                { "id": "S3.M3.SB1.D6", "number": 6, "title": "용역적격심사" },
+                { "id": "S3.M3.SB1.D7", "number": 7, "title": "e-발주시스템 활용" }
+              ]
+            },
+            {
+              "id": "S3.M3.SB2",
+              "number": 2,
+              "title": "다수공급자계약(MAS) 절차 및 이행관리",
+              "detailItems": [
+                { "id": "S3.M3.SB2.D1", "number": 1, "title": "국가종합전자조달시스템(나라장터) 종합쇼핑몰 활용" },
+                { "id": "S3.M3.SB2.D2", "number": 2, "title": "다수공급자계약 일반절차 이해" },
+                { "id": "S3.M3.SB2.D3", "number": 3, "title": "다수공급자계약 적격성 평가 및 사전심사" },
+                { "id": "S3.M3.SB2.D4", "number": 4, "title": "다수공급자계약 2단계경쟁" },
+                { "id": "S3.M3.SB2.D5", "number": 5, "title": "다수공급자계약 계약이행실적 평가" },
+                { "id": "S3.M3.SB2.D6", "number": 6, "title": "카탈로그계약 및 디지털서비스계약 절차" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "S3.M4",
+          "number": 4,
+          "title": "공사계약관리",
+          "subItems": [
+            {
+              "id": "S3.M4.SB1",
+              "number": 1,
+              "title": "공사계약 일반개요",
+              "detailItems": [
+                { "id": "S3.M4.SB1.D1", "number": 1, "title": "건설산업기본법 이해" },
+                { "id": "S3.M4.SB1.D2", "number": 2, "title": "건설기술진흥법 이해" },
+                { "id": "S3.M4.SB1.D3", "number": 3, "title": "건설공사 발주 세부기준 이해" }
+              ]
+            },
+            {
+              "id": "S3.M4.SB2",
+              "number": 2,
+              "title": "공사계약 일반절차 및 이행관리",
+              "detailItems": [
+                { "id": "S3.M4.SB2.D1", "number": 1, "title": "공사 입찰 공고문 검토" },
+                { "id": "S3.M4.SB2.D2", "number": 2, "title": "공사 낙찰자 결정방법" },
+                { "id": "S3.M4.SB2.D3", "number": 3, "title": "입찰참가자격 사전심사(PQ)" },
+                { "id": "S3.M4.SB2.D4", "number": 4, "title": "공사 적격심사" },
+                { "id": "S3.M4.SB2.D5", "number": 5, "title": "공사 설계변경 및 계약금액 조정" }
+              ]
+            },
+            {
+              "id": "S3.M4.SB3",
+              "number": 3,
+              "title": "공사계약 특화 절차 및 이행관리",
+              "detailItems": [
+                { "id": "S3.M4.SB3.D1", "number": 1, "title": "공사 종합심사낙찰제 절차" },
+                { "id": "S3.M4.SB3.D2", "number": 2, "title": "일괄, 대안 및 기술제안입찰 절차" },
+                { "id": "S3.M4.SB3.D3", "number": 3, "title": "공사 시공관리 절차" },
+                { "id": "S3.M4.SB3.D4", "number": 4, "title": "기술용역 계약 절차" },
+                { "id": "S3.M4.SB3.D5", "number": 5, "title": "하도급관리" },
+                { "id": "S3.M4.SB3.D6", "number": 6, "title": "하도급대금 전자적 처리를 위한 절차" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -7,67 +7,102 @@ import sys
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-CONCEPTS = ROOT / "src" / "data" / "concepts.json"
+QUESTIONS = ROOT / "src" / "data" / "questions.v2.json"
 OUT_DIR = ROOT / "public" / "anki"
-TSV = OUT_DIR / "ppm_subject1.tsv"
-APKG = OUT_DIR / "ppm_subject1.apkg"
+
+# (파일 접두사, 덱 이름, 과목 필터 — None이면 전체, genanki 덱 ID)
+DECKS = [
+    ("ppm_subject1_2", "공공조달관리사::1·2과목 문제은행", None, 1723945122),
+    ("ppm_subject1", "공공조달관리사::1과목 공공조달과 법제도 이해", 1, 1723945123),
+    ("ppm_subject2", "공공조달관리사::2과목 공공조달계획 수립 및 분석", 2, 1723945124),
+]
+
+TYPE_LABELS = {
+    "negative": "부정형",
+    "concept-diff": "개념 구별",
+    "numeric": "숫자 암기",
+    "box-multi": "박스 다중선택",
+    "box-blank": "박스 빈칸",
+    "positive": "기본형",
+}
+
+ANSWER_MARKS = ["①", "②", "③", "④"]
 
 
 def clean_html(value):
     return re.sub(r"\s+", " ", value).strip()
 
 
-def tags_for(concept, extra):
-    tags = concept["tags"] + [extra, f"chapter_{concept['chapter']}"]
+def tags_for(question, extra):
+    tags = [
+        f"subject_{question['subject']}",
+        question["curriculumTag"],
+        question["type"],
+        extra,
+    ]
     return " ".join(dict.fromkeys(tag.replace(" ", "_") for tag in tags))
 
 
-def make_cards(concepts):
+def question_body(question):
+    """문제 지문 전체(박스 지문·ㄱㄴㄷ 보기 포함)를 HTML로 조립한다."""
+    parts = [f"[{TYPE_LABELS[question['type']]}] {question['prompt']}"]
+    if question.get("boxContext"):
+        box = question["boxContext"].replace("\n", "<br>")
+        parts.append(f"<div style='border-left:3px solid #6f8f73;padding-left:10px'>{box}</div>")
+    if question.get("choiceGroups"):
+        groups = "<br>".join(
+            f"{mark}. {text}"
+            for mark, text in zip(["ㄱ", "ㄴ", "ㄷ", "ㄹ", "ㅁ"], question["choiceGroups"])
+        )
+        parts.append(groups)
+    choices = "<br>".join(
+        f"{ANSWER_MARKS[index]} {choice}" for index, choice in enumerate(question["choices"])
+    )
+    parts.append(choices)
+    return "<br><br>".join(parts)
+
+
+def make_cards(questions):
+    """앱의 studyData.ts flashcards와 동일하게 문항당 핵심개념 + 문제풀이 + 함정 카드 3장을 만든다."""
     cards = []
-    for concept in concepts:
-        cards.extend(
-            [
+    for question in questions:
+        answer = question["choices"][question["answerIndex"]]
+        cards.append(
+            (
+                f"[핵심개념] {question['curriculumPath']['detail']}",
                 (
-                    f"{concept['title']}이란?",
-                    f"{concept['definition']}<br><br><b>쉬운 말</b>: {concept['easy']}<br><b>출처</b>: {concept['source']}",
-                    tags_for(concept, "definition"),
+                    f"<b>출제 포인트</b>: {question['sourceExcerpt']}"
+                    f"<br><br><b>문제 연결</b>: {question['explanation']}"
+                    f"<br><b>출처</b>: {question['sourceRef']}"
                 ),
+                tags_for(question, "concept"),
+            )
+        )
+        cards.append(
+            (
+                question_body(question),
                 (
-                    f"{concept['title']}에서 조심할 오답 함정은?",
-                    f"{concept['trap']}<br><br><b>복습 힌트</b>: {concept['easy']}",
-                    tags_for(concept, "trap"),
+                    f"<b>정답</b>: {ANSWER_MARKS[question['answerIndex']]} {answer}"
+                    f"<br><br>{question['explanation']}"
+                    f"<br><br><b>근거</b>: {question['sourceExcerpt']}"
+                    f"<br><b>출처</b>: {question['sourceRef']}"
                 ),
-                (
-                    f"{concept['title']}를 10초 안에 쉬운 말로 설명하면?",
-                    f"{concept['easy']}<br><br><b>시험 포인트</b>: {concept['definition']}",
-                    tags_for(concept, "adhd_short"),
-                ),
-                (
-                    f"{concept['source']}의 핵심 키워드는?",
-                    f"<b>{concept['title']}</b><br>{concept['section']}<br>{', '.join(concept['tags'])}",
-                    tags_for(concept, "source_map"),
-                ),
-                (
-                    f"시험장에서 \"{concept['title']}\"가 나오면 먼저 떠올릴 기준은?",
-                    f"<b>판단 기준</b>: {concept['easy']}<br><br><b>왜 중요한가</b>: {concept['definition']}",
-                    tags_for(concept, "exam_trigger"),
-                ),
-                (
-                    f"다음 표현이 왜 위험할까?<br>\"{concept['trap']}\"",
-                    f"<b>위험한 이유</b>: 이 표현은 {concept['title']}의 범위를 좁히거나 원칙과 예외를 섞을 수 있습니다.<br><br><b>정리</b>: {concept['definition']}",
-                    tags_for(concept, "wrong_phrase"),
-                ),
-                (
-                    f"{concept['title']}를 다른 개념과 헷갈리지 않으려면 어떤 단어에 표시할까?",
-                    f"<b>표시할 단어</b>: {concept['title']}<br><b>연결 범위</b>: {concept['section']}<br><b>암기 문장</b>: {concept['easy']}",
-                    tags_for(concept, "keyword_anchor"),
-                ),
-                (
-                    f"{concept['title']} 관련 문제에서 제거해야 할 선택지 패턴은?",
-                    f"<b>제거 패턴</b>: \"항상\", \"오직\", \"가격만\", \"절차 생략\", \"조달청만\"처럼 범위를 과도하게 단정하는 표현입니다.<br><br><b>정답 방향</b>: {concept['easy']}",
-                    tags_for(concept, "choice_elimination"),
-                ),
-            ]
+                tags_for(question, "source"),
+            )
+        )
+        reasons = "<br>".join(
+            f"{ANSWER_MARKS[index]} {choice} — {reason}"
+            for index, (choice, reason) in enumerate(
+                zip(question["choices"], question["wrongReasons"])
+            )
+        )
+        cards.append(
+            (
+                f"{question['curriculumPath']['detail']}에서 조심할 선택지는?"
+                f"<br><br>{question['prompt']}",
+                f"{reasons}<br><br><b>난이도</b>: {question['difficulty']}",
+                tags_for(question, "trap"),
+            )
         )
     return cards
 
@@ -76,16 +111,16 @@ def stable_id(text):
     return int(hashlib.sha1(text.encode("utf-8")).hexdigest()[:8], 16)
 
 
-def write_tsv(cards):
+def write_tsv(cards, path):
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    with TSV.open("w", encoding="utf-8", newline="") as file:
+    with path.open("w", encoding="utf-8", newline="") as file:
         writer = csv.writer(file, delimiter="\t")
         writer.writerow(["Front", "Back", "Tags"])
         for front, back, tags in cards:
-            writer.writerow([front, clean_html(back), tags])
+            writer.writerow([clean_html(front), clean_html(back), tags])
 
 
-def write_apkg(cards):
+def write_apkg(cards, path, deck_name, deck_id):
     try:
         import genanki
     except ImportError:
@@ -113,11 +148,12 @@ def write_apkg(cards):
   line-height: 1.55;
   color: #17201a;
   background: #f6f7f2;
+  text-align: left;
 }
 b { color: #244f35; }
 """,
     )
-    deck = genanki.Deck(1723945121, "공공조달관리사::1과목 공공조달과 법제도 이해")
+    deck = genanki.Deck(deck_id, deck_name)
     for front, back, tags in cards:
         deck.add_note(
             genanki.Note(
@@ -127,18 +163,24 @@ b { color: #244f35; }
                 guid=str(stable_id(front + back)),
             )
         )
-    genanki.Package(deck).write_to_file(APKG)
+    genanki.Package(deck).write_to_file(path)
     return True
 
 
 def main():
-    concepts = json.loads(CONCEPTS.read_text(encoding="utf-8"))
-    cards = make_cards(concepts)
-    write_tsv(cards)
-    wrote_apkg = write_apkg(cards)
-    print(f"Wrote {len(cards)} cards to {TSV}")
-    if wrote_apkg:
-        print(f"Wrote APKG to {APKG}")
+    questions = json.loads(QUESTIONS.read_text(encoding="utf-8"))
+    for prefix, deck_name, subject, deck_id in DECKS:
+        subset = questions if subject is None else [q for q in questions if q["subject"] == subject]
+        if not subset:
+            print(f"skip {prefix}: no questions", file=sys.stderr)
+            continue
+        cards = make_cards(subset)
+        tsv = OUT_DIR / f"{prefix}.tsv"
+        apkg = OUT_DIR / f"{prefix}.apkg"
+        write_tsv(cards, tsv)
+        wrote_apkg = write_apkg(cards, apkg, deck_name, deck_id)
+        suffix = " + APKG" if wrote_apkg else " (APKG skipped)"
+        print(f"{prefix}: {len(cards)} cards from {len(subset)} questions -> {tsv.name}{suffix}")
 
 
 if __name__ == "__main__":

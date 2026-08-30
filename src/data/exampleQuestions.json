@@ -1,0 +1,120 @@
+[
+  {
+    "id": "EX-S1-001",
+    "subject": 1,
+    "subjectName": "공공조달과 법제도 이해",
+    "type": "negative",
+    "prompt": "수의계약의 장점과 거리가 먼 것은?",
+    "choices": [
+      "절차 간소화",
+      "신속한 계약 체결",
+      "공정성 및 투명성 확보",
+      "조달기관에 적합한 조달 대상물을 확보할 가능성 향상"
+    ],
+    "answerIndex": null,
+    "curriculumTag": "S1.M2.SB4.D1",
+    "curriculumPath": {
+      "major": "공공조달 원칙 및 방법",
+      "sub": "비경쟁적 공공조달 방법",
+      "detail": "수의계약"
+    },
+    "source": "docs/(공개용)공공조달관리사 수험자용 예제문제.pdf#page=2",
+    "note": "공개 예제문제는 정답을 별도로 제공하지 않음"
+  },
+  {
+    "id": "EX-S1-002",
+    "subject": 1,
+    "subjectName": "공공조달과 법제도 이해",
+    "type": "concept-diff",
+    "prompt": "당사자 일방의 의사표시에 의하여 유효하게 성립된 계약의 효력을 장래에 대하여 소멸시키는 행위는?",
+    "choices": ["해제", "해지", "철회", "취소"],
+    "answerIndex": null,
+    "curriculumTag": "S1.M5.SB1.D3",
+    "curriculumPath": {
+      "major": "공공조달법률 이해",
+      "sub": "공공계약 관련 민법 규정의 이해",
+      "detail": "계약의 해제·해지에 관한 규정"
+    },
+    "source": "docs/(공개용)공공조달관리사 수험자용 예제문제.pdf#page=2",
+    "note": "공개 예제문제는 정답을 별도로 제공하지 않음"
+  },
+  {
+    "id": "EX-S2-001",
+    "subject": 2,
+    "subjectName": "공공조달계획 수립 및 분석",
+    "type": "negative",
+    "prompt": "국가를 당사자로 하는 계약에 관한 법령상 입찰공고 명시 사항으로 규정하고 있지 않은 것은?",
+    "choices": [
+      "계약의 중간보고일",
+      "계약하고자 하는 조건을 공시하는 장소",
+      "입찰 관련 비리의 신고에 관한 사항",
+      "입찰보증금의 국고귀속에 관한 사항"
+    ],
+    "answerIndex": null,
+    "curriculumTag": "S2.M2.SB3.D2",
+    "curriculumPath": {
+      "major": "조달요구 응대 및 제안",
+      "sub": "입찰공고문 분석",
+      "detail": "입찰공고 내용 검토 및 분석"
+    },
+    "source": "docs/(공개용)공공조달관리사 수험자용 예제문제.pdf#page=3",
+    "note": "공개 예제문제는 정답을 별도로 제공하지 않음"
+  },
+  {
+    "id": "EX-S2-002",
+    "subject": 2,
+    "subjectName": "공공조달계획 수립 및 분석",
+    "type": "numeric",
+    "prompt": "(계약예규) 협상에 의한 계약체결기준상 계약담당공무원은 협상이 성립된 후 며칠 이내에 계약을 체결하여야 하는가?",
+    "choices": ["3일", "5일", "7일", "10일"],
+    "answerIndex": null,
+    "curriculumTag": "S2.M3.SB4.D2",
+    "curriculumPath": {
+      "major": "입찰·제안평가 및 계약체결",
+      "sub": "낙찰자 결정방법",
+      "detail": "협상계약 절차 및 낙찰자 결정"
+    },
+    "source": "docs/(공개용)공공조달관리사 수험자용 예제문제.pdf#page=3",
+    "note": "공개 예제문제는 정답을 별도로 제공하지 않음"
+  },
+  {
+    "id": "EX-S3-001",
+    "subject": 3,
+    "subjectName": "공공계약관리",
+    "type": "box-multi",
+    "prompt": "용역 다수공급자계약 업무처리규정상 조달청장이 수요기관의 장의 요청에 의해 2단계경쟁의 예외를 허용할 수 있는 경우를 모두 고른 것은?",
+    "choiceGroups": [
+      "재해복구에 필요한 용역을 긴급하게 구매하는 경우",
+      "방역사업에 필요한 용역을 긴급하게 구매하는 경우",
+      "수요기관의 장이 다수공급자계약 2단계경쟁 회피가 아닌 명백한 사유가 있어 2단계 경쟁 예외를 요청하는 경우"
+    ],
+    "choices": ["ㄱ, ㄴ", "ㄱ, ㄷ", "ㄴ, ㄷ", "ㄱ, ㄴ, ㄷ"],
+    "answerIndex": null,
+    "curriculumTag": "S3.M3.SB2.D4",
+    "curriculumPath": {
+      "major": "용역·다수공급자 계약 관리",
+      "sub": "다수공급자계약(MAS) 절차 및 이행관리",
+      "detail": "다수공급자계약 2단계경쟁"
+    },
+    "source": "docs/(공개용)공공조달관리사 수험자용 예제문제.pdf#page=4",
+    "note": "공개 예제문제는 정답을 별도로 제공하지 않음"
+  },
+  {
+    "id": "EX-S3-002",
+    "subject": 3,
+    "subjectName": "공공계약관리",
+    "type": "box-blank",
+    "prompt": "건설산업기본법상 건설공사의 하도급 제한 규정이다. (     )에 들어갈 금액은?",
+    "boxContext": "건설업자는 1건 공사의 금액이 ( ) 미만인 건설공사를 도급받은 경우에는 그 건설공사의 일부를 종합공사를 시공하는 업종을 등록한 건설사업자에게 하도급할 수 없다.",
+    "choices": ["10억원", "20억원", "30억원", "50억원"],
+    "answerIndex": null,
+    "curriculumTag": "S3.M4.SB1.D1",
+    "curriculumPath": {
+      "major": "공사계약관리",
+      "sub": "공사계약 일반개요",
+      "detail": "건설산업기본법 이해"
+    },
+    "source": "docs/(공개용)공공조달관리사 수험자용 예제문제.pdf#page=4",
+    "note": "공개 예제문제는 정답을 별도로 제공하지 않음"
+  }
+]

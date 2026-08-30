@@ -17,7 +17,7 @@ import {
   Trophy,
   X,
 } from 'lucide-react';
-import { chapters, examInfo, flashcards, pickQuestions, questions, type Flashcard, type Question } from './data/studyData';
+import { chapters, examInfo, filterBySubject, filterCardsBySubject, flashcards, pickQuestions, questions, typeLabels, type Flashcard, type Question, type SubjectFilter } from './data/studyData';
 import { getStats, loadState, recordAttempt, saveState, toggleStar, type StudyState } from './storage';
 import './styles.css';
 
@@ -25,7 +25,14 @@ type View = 'home' | 'quiz' | 'summary' | 'wrong' | 'cards' | 'sources';
 type QuizMode = 'focus5' | 'quick10' | 'exam30' | 'wrong';
 type CardMode = 'all' | 'wrong';
 
-const answerMarks = ['1', '2', '3', '4'];
+const answerMarks = ['①', '②', '③', '④'];
+const subjectOptions: { value: SubjectFilter; label: string }[] = [
+  { value: 'all', label: '전체' },
+  { value: 1, label: '1과목' },
+  { value: 2, label: '2과목' },
+];
+const subjectLabels: Record<string, string> = { all: '1·2과목', 1: '1과목', 2: '2과목' };
+const groupMarks = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ'];
 
 const randomInt = (max: number) => {
   if (window.crypto?.getRandomValues) {
@@ -65,6 +72,7 @@ const App = () => {
   const [view, setView] = useState<View>('home');
   const [quiz, setQuiz] = useState<Question[]>([]);
   const [quizMode, setQuizMode] = useState<QuizMode>('focus5');
+  const [subjectFilter, setSubjectFilter] = useState<SubjectFilter>('all');
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [showDeep, setShowDeep] = useState(false);
@@ -77,8 +85,21 @@ const App = () => {
   const stats = getStats(state);
 
   const wrongQuestions = useMemo(
-    () => questions.filter((question) => state.wrongQuestionIds.includes(question.id)),
-    [state.wrongQuestionIds],
+    () => filterBySubject(
+      questions.filter((question) => state.wrongQuestionIds.includes(question.id)),
+      subjectFilter,
+    ),
+    [state.wrongQuestionIds, subjectFilter],
+  );
+
+  const subjectQuestions = useMemo(() => filterBySubject(questions, subjectFilter), [subjectFilter]);
+  const subjectCards = useMemo(() => filterCardsBySubject(flashcards, subjectFilter), [subjectFilter]);
+  const starredQuestions = useMemo(
+    () => filterBySubject(
+      questions.filter((question) => state.starredQuestionIds.includes(question.id)),
+      subjectFilter,
+    ),
+    [state.starredQuestionIds, subjectFilter],
   );
 
   const updateState = (next: StudyState) => {
@@ -86,8 +107,10 @@ const App = () => {
     saveState(next);
   };
 
-  const startQuiz = (mode: QuizMode) => {
-    const nextQuiz = mode === 'wrong' ? shuffle(wrongQuestions).slice(0, 30) : pickQuestions(mode);
+  const startQuiz = (mode: QuizMode, subject: SubjectFilter = subjectFilter) => {
+    const nextQuiz = mode === 'wrong'
+      ? shuffle(filterBySubject(questions.filter((question) => state.wrongQuestionIds.includes(question.id)), subject)).slice(0, 30)
+      : pickQuestions(mode, Date.now(), subject);
     if (!nextQuiz.length) return;
     setQuiz(nextQuiz.map(randomizeChoices));
     setQuizMode(mode);
@@ -123,11 +146,18 @@ const App = () => {
     setShowDeep(false);
   };
 
+  const changeSubject = (subject: SubjectFilter) => {
+    setSubjectFilter(subject);
+    if (view === 'quiz') startQuiz(quizMode, subject);
+    if (view === 'cards') openCards(cardMode, subject);
+  };
+
+  const subjectLabel = subjectLabels[String(subjectFilter)];
+  const ankiFilePrefix = subjectFilter === 1 ? 'ppm_subject1' : subjectFilter === 2 ? 'ppm_subject2' : 'ppm_subject1_2';
+  const examTargetCount = subjectFilter === 1 ? 30 : subjectFilter === 2 ? 20 : 50;
   const current = quiz[index];
   const sessionCorrect = sessionResults.filter(Boolean).length;
   const sessionAccuracy = sessionResults.length ? Math.round((sessionCorrect / sessionResults.length) * 100) : 0;
-  const starredQuestions = questions.filter((question) => state.starredQuestionIds.includes(question.id));
-  const wrongConceptIds = new Set([...wrongQuestions, ...starredQuestions].map((question) => question.conceptId));
   const visibleCards = cardDeck;
   const currentCard = visibleCards[cardIndex % Math.max(visibleCards.length, 1)];
 
@@ -137,10 +167,26 @@ const App = () => {
     return () => window.clearInterval(timer);
   }, [view, quizMode]);
 
-  const openCards = (mode: CardMode = 'all') => {
-    const baseCards = mode === 'wrong'
-      ? flashcards.filter((card) => wrongConceptIds.has(card.conceptId))
-      : flashcards;
+  const getReviewQuestionIds = (subject: SubjectFilter) => {
+    const reviewQuestions = filterBySubject(
+      questions.filter((question) => (
+        state.wrongQuestionIds.includes(question.id)
+        || state.starredQuestionIds.includes(question.id)
+      )),
+      subject,
+    );
+    return new Set(reviewQuestions.map((question) => question.id));
+  };
+
+  const getCardsFor = (mode: CardMode, subject: SubjectFilter) => {
+    const pool = filterCardsBySubject(flashcards, subject);
+    return mode === 'wrong'
+      ? pool.filter((card) => getReviewQuestionIds(subject).has(card.questionId))
+      : pool;
+  };
+
+  const openCards = (mode: CardMode = 'all', subject: SubjectFilter = subjectFilter) => {
+    const baseCards = getCardsFor(mode, subject);
     setCardMode(mode);
     setCardIndex(0);
     setCardDeck(shuffle(baseCards));
@@ -161,22 +207,22 @@ const App = () => {
   };
 
   const downloadWrongAnki = () => {
-    const targets = questions.filter(
+    const targets = subjectQuestions.filter(
       (question) => state.wrongQuestionIds.includes(question.id) || state.starredQuestionIds.includes(question.id),
     );
     const rows = [
       ['Front', 'Back', 'Tags'],
       ...targets.map((question) => [
         question.prompt,
-        `${question.conclusion}<br><br>${question.explanation}<br><br>출처: ${question.source}`,
-        [...question.tags, 'wrong_review', `chapter_${question.chapter}`].join(' '),
+        `${question.explanation}<br><br>근거: ${question.sourceExcerpt}<br><br>출처: ${question.sourceRef}`,
+        [`subject_${question.subject}`, question.curriculumTag, question.type, 'wrong_review'].join(' '),
       ]),
     ];
     const tsv = rows.map((row) => row.map((cell) => String(cell).replace(/\t/g, ' ').replace(/\n/g, '<br>')).join('\t')).join('\n');
     const url = URL.createObjectURL(new Blob([tsv], { type: 'text/tab-separated-values;charset=utf-8' }));
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = 'ppm_subject1_wrong_review.tsv';
+    anchor.download = `${ankiFilePrefix}_wrong_review.tsv`;
     anchor.click();
     URL.revokeObjectURL(url);
   };
@@ -192,7 +238,7 @@ const App = () => {
       <header className="appHeader">
         <div>
           <p className="eyebrow">2026 공공조달관리사 CBT</p>
-          <h1>1과목 집중 퀴즈</h1>
+          <h1>1·2과목 집중 퀴즈</h1>
         </div>
         <button className="iconButton" title="처음으로" onClick={() => setView('home')}>
           <BookOpenCheck size={20} />
@@ -223,22 +269,24 @@ const App = () => {
             <Metric label="완료 세트" value={`${state.completedSets}회`} />
           </section>
 
+          <SubjectPicker value={subjectFilter} onChange={changeSubject} countOf={(subject) => `${filterBySubject(questions, subject).length}문항`} />
+
           <section className="actions">
-            <ActionButton icon={<Sparkles />} title="5문항 집중 세트" text="출퇴근길 짧게 시작" onClick={() => startQuiz('focus5')} />
-            <ActionButton icon={<ListChecks />} title="10문항 빠른퀴즈" text="흐름 유지용" onClick={() => startQuiz('quick10')} />
-            <ActionButton icon={<AlarmClock />} title="1과목 실전 30문항" text="CBT 문항 수 맞춤" onClick={() => startQuiz('exam30')} />
-            <ActionButton icon={<RotateCcw />} title="오답만 다시풀기" text={`${wrongQuestions.length}문항 대기`} onClick={() => startQuiz('wrong')} disabled={!wrongQuestions.length} />
-            <ActionButton icon={<Layers />} title="Anki 플래시카드" text={`${examInfo.flashcardCount}장`} onClick={() => openCards('all')} />
+            <ActionButton icon={<Sparkles />} title="5문항 집중 세트" text={`${subjectLabel} · 짧게 시작`} onClick={() => startQuiz('focus5')} disabled={!subjectQuestions.length} />
+            <ActionButton icon={<ListChecks />} title="10문항 빠른퀴즈" text={`${subjectLabel} · 흐름 유지용`} onClick={() => startQuiz('quick10')} disabled={!subjectQuestions.length} />
+            <ActionButton icon={<AlarmClock />} title={`${subjectLabel} 실전 ${examTargetCount}문항`} text="CBT 과목 문항 수 맞춤" onClick={() => startQuiz('exam30')} disabled={!subjectQuestions.length} />
+            <ActionButton icon={<RotateCcw />} title="오답만 다시풀기" text={`${subjectLabel} ${wrongQuestions.length}문항 대기`} onClick={() => startQuiz('wrong')} disabled={!wrongQuestions.length} />
+            <ActionButton icon={<Layers />} title="Anki 플래시카드" text={`${subjectLabel} ${subjectCards.length}장`} onClick={() => openCards('all')} disabled={!subjectCards.length} />
             <ActionButton icon={<Download />} title="자료와 내보내기" text="Anki TSV/APKG" onClick={() => setView('sources')} />
           </section>
 
           <section className="chapterList">
-            <h2>1과목 범위</h2>
+            <h2>1·2과목 범위</h2>
             {chapters.map((chapter) => (
               <div className="chapterRow" key={chapter.chapter}>
-                <span>{chapter.chapter}장</span>
+                <span>{chapter.chapter}과목</span>
                 <strong>{chapter.title}</strong>
-                <em>{chapter.count}문항</em>
+                <em>{chapter.count}/{chapter.officialQuestionCount}문항</em>
               </div>
             ))}
           </section>
@@ -248,19 +296,37 @@ const App = () => {
       {view === 'quiz' && current && (
         <section className="quizScreen">
           <div className="quizTop">
-            <span>{quizMode === 'exam30' ? '실전 30문항' : quizMode === 'wrong' ? '오답 복습' : '집중 세트'}</span>
+            <span>{subjectLabel} · {quizMode === 'exam30' ? `실전 ${quiz.length}문항` : quizMode === 'wrong' ? '오답 복습' : '집중 세트'}</span>
             <strong>{quizMode === 'exam30' ? `${formatTime(elapsed)} · ` : ''}{index + 1} / {quiz.length}</strong>
           </div>
           <div className="progressTrack" aria-label="문제 진행률">
             <span style={{ width: `${((index + 1) / quiz.length) * 100}%` }} />
           </div>
+          <SubjectPicker
+            value={subjectFilter}
+            onChange={changeSubject}
+            countOf={(subject) => `${filterBySubject(questions, subject).length}문항`}
+            note="범위를 바꾸면 현재 세트를 새로 뽑습니다"
+            compact
+          />
           <div className="focusHint">
             <CircleHelp size={18} />
             <span>문제와 보기 순서는 매번 섞입니다. 먼저 틀린 이유가 보이는 선택지부터 지우세요.</span>
           </div>
           <article className="questionPanel">
-            <p className="source">{current.source}</p>
+            <p className="source">
+              <span className="typeTag">{typeLabels[current.type]}</span>
+              {current.curriculumPath.major} &gt; {current.curriculumPath.detail}
+            </p>
             <h2>{current.prompt}</h2>
+            {current.boxContext && <pre className="boxContext">{current.boxContext}</pre>}
+            {current.choiceGroups && (
+              <div className="choiceGroups">
+                {current.choiceGroups.map((group, groupIndex) => (
+                  <p key={group}><strong>{groupMarks[groupIndex]}.</strong> {group}</p>
+                ))}
+              </div>
+            )}
             <div className="choices">
               {current.choices.map((choice, choiceIndex) => {
                 const isAnswer = choiceIndex === current.answerIndex;
@@ -283,23 +349,22 @@ const App = () => {
               <div className={selected === current.answerIndex ? 'result good' : 'result bad'}>
                 {selected === current.answerIndex ? '정답' : '오답'}
               </div>
-              <h3>{current.conclusion}</h3>
-              <p>{current.adhdHint}</p>
+              <h3>정답 {answerMarks[current.answerIndex]} {current.choices[current.answerIndex]}</h3>
+              <p>{current.explanation}</p>
               <button className="foldButton" onClick={() => setShowDeep(!showDeep)}>
                 자세한 해설 <ChevronDown size={18} />
               </button>
               {showDeep && (
                 <div className="deep">
-                  <p>{current.explanation}</p>
                   <ul>
                     {current.wrongReasons.map((reason, reasonIndex) => (
                       <li key={reason}>{answerMarks[reasonIndex]}. {reason}</li>
                     ))}
                   </ul>
                   <div className="terms">
-                    {current.terms.map((term) => (
-                      <span key={term.term}><strong>{term.term}</strong>{term.meaning}</span>
-                    ))}
+                    <span><strong>근거</strong>{current.sourceExcerpt}</span>
+                    <span><strong>출처</strong>{current.sourceRef}</span>
+                    <span><strong>난이도</strong>{current.difficulty}</span>
                   </div>
                 </div>
               )}
@@ -352,10 +417,22 @@ const App = () => {
       {view === 'wrong' && (
         <section className="listView">
           <h2>오답노트</h2>
+          <SubjectPicker
+            value={subjectFilter}
+            onChange={changeSubject}
+            countOf={(subject) => `${filterBySubject(
+              questions.filter((question) => (
+                state.wrongQuestionIds.includes(question.id)
+                || state.starredQuestionIds.includes(question.id)
+              )),
+              subject,
+            ).length}문항`}
+            compact
+          />
           {!wrongQuestions.length && !starredQuestions.length && (
             <EmptyState
               title="아직 쌓인 오답이 없습니다"
-              text="5문항 집중 세트를 풀면 틀린 문제와 헷갈림 표시가 자동으로 모입니다."
+              text={`${subjectLabel}에서 5문항 집중 세트를 풀면 틀린 문제와 헷갈림 표시가 자동으로 모입니다.`}
               action="집중 세트 시작"
               onClick={() => startQuiz('focus5')}
             />
@@ -407,6 +484,12 @@ const App = () => {
             <span>{cardMode === 'wrong' ? '오답 Anki 카드' : 'Anki 미리보기'}</span>
             <strong>{visibleCards.length ? cardIndex + 1 : 0} / {visibleCards.length}</strong>
           </div>
+          <SubjectPicker
+            value={subjectFilter}
+            onChange={changeSubject}
+            countOf={(subject) => `${getCardsFor(cardMode, subject).length}장`}
+            compact
+          />
           <div className="segmentControl">
             <button className={cardMode === 'all' ? 'active' : ''} onClick={() => openCards('all')}>전체 카드</button>
             <button className={cardMode === 'wrong' ? 'active' : ''} onClick={() => openCards('wrong')}>오답 카드</button>
@@ -453,6 +536,12 @@ const App = () => {
       {view === 'sources' && (
         <section className="sourceView">
           <h2>자료와 내보내기</h2>
+          <SubjectPicker
+            value={subjectFilter}
+            onChange={changeSubject}
+            countOf={(subject) => `${filterCardsBySubject(flashcards, subject).length}장`}
+            compact
+          />
           <div className="exportIntro">
             <FileDown size={22} />
             <div>
@@ -460,11 +549,11 @@ const App = () => {
               <span>TSV는 Anki 버전이나 기기에서 APKG 가져오기가 안 될 때 쓰는 예비 파일입니다.</span>
             </div>
           </div>
-          <a className="downloadLink" href="anki/ppm_subject1.tsv" download>
-            <Download size={18} /> Anki TSV 다운로드
+          <a className="downloadLink" href={`anki/${ankiFilePrefix}.tsv`} download>
+            <Download size={18} /> {subjectLabel} Anki TSV 다운로드
           </a>
-          <a className="downloadLink" href="anki/ppm_subject1.apkg" download>
-            <Download size={18} /> Anki APKG 다운로드
+          <a className="downloadLink" href={`anki/${ankiFilePrefix}.apkg`} download>
+            <Download size={18} /> {subjectLabel} Anki APKG 다운로드
           </a>
           <button className="downloadLink" onClick={downloadWrongAnki} disabled={!wrongQuestions.length && !starredQuestions.length}>
             <Download size={18} /> 내 오답 Anki TSV 다운로드
@@ -520,10 +609,41 @@ const ActionButton = ({
   </button>
 );
 
+const SubjectPicker = ({
+  value,
+  onChange,
+  countOf,
+  note,
+  compact,
+}: {
+  value: SubjectFilter;
+  onChange: (subject: SubjectFilter) => void;
+  countOf: (subject: SubjectFilter) => string;
+  note?: string;
+  compact?: boolean;
+}) => (
+  <section className={compact ? 'subjectPicker compact' : 'subjectPicker'} aria-label="출제 범위 선택">
+    <span className="subjectPickerLabel">출제 범위{note ? ` · ${note}` : ''}</span>
+    <div className="subjectTabs" role="group">
+      {subjectOptions.map((option) => (
+        <button
+          key={String(option.value)}
+          className={value === option.value ? 'subjectTab active' : 'subjectTab'}
+          onClick={() => onChange(option.value)}
+          aria-pressed={value === option.value}
+        >
+          <strong>{option.label}</strong>
+          <em>{countOf(option.value)}</em>
+        </button>
+      ))}
+    </div>
+  </section>
+);
+
 const QuestionListItem = ({ question, onClick }: { question: Question; onClick: () => void }) => (
   <button className="listItem" onClick={onClick}>
     <strong>{question.prompt}</strong>
-    <span>{question.source}</span>
+    <span>{typeLabels[question.type]} · {question.curriculumPath.detail}</span>
   </button>
 );
 

@@ -3,5 +3,8 @@ dist
 .DS_Store
 *.log
 .env
-docs
+docs/*
+!docs/question_types.md
+skills/source-text
+skills/**/*.full_text.txt
 *.tsbuildinfo
